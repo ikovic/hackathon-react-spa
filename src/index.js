@@ -1,11 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
 import { LocaleProvider, Layout, Menu } from 'antd';
 import enUS from 'antd/lib/locale-provider/en_US';
 import { BrowserRouter, Switch, Route, Link } from 'react-router-dom';
 
 import Dashboard from 'pages/Dashboard';
 import Pipeline from 'pages/Pipeline';
+import store from 'redux/index';
 
 import 'antd/dist/antd.css';
 import './styles.css';
@@ -57,7 +59,9 @@ class App extends React.Component {
 ReactDOM.render(
   <BrowserRouter>
     <LocaleProvider locale={enUS}>
-      <App />
+      <Provider store={store}>
+        <App />
+      </Provider>
     </LocaleProvider>
   </BrowserRouter>,
   document.getElementById('root'),
