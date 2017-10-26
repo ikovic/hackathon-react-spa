@@ -1,5 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { LocaleProvider } from 'antd';
+import enUS from 'antd/lib/locale-provider/en_US';
+
+import 'antd/dist/antd.css';
 
 class App extends React.Component {
   render() {
@@ -7,4 +11,9 @@ class App extends React.Component {
   }
 }
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(
+  <LocaleProvider locale={enUS}>
+    <App />
+  </LocaleProvider>,
+  document.getElementById('root'),
+);
