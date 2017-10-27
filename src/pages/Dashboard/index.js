@@ -1,5 +1,6 @@
 import React from 'react';
 import { Card, Button, Icon } from 'antd';
+import { LineChart, XAxis, YAxis, Tooltip, Line } from 'recharts';
 
 const STATUS = {
   ACTIVE: 'active',
@@ -60,12 +61,45 @@ class PipelineHeader extends React.Component {
   }
 }
 
+const chartData = [
+  { name: '2016-01-01', gs: 1 },
+  { name: '2016-01-08', gs: 3 },
+  { name: '2016-01-15', gs: 0 },
+  { name: '2016-01-21', gs: 4 },
+  { name: '2016-01-28', gs: 2 },
+];
+
 class PipelineBody extends React.Component {
+  state = {
+    chartWidth: null,
+  };
+  componentDidMount() {
+    this.setState({ chartWidth: this.myInput.lastChild.offsetWidth });
+  }
+
   render() {
     return (
       <div style={{ marginTop: '10px' }}>
         <Card.Grid style={{ width: '50%' }}>Preview</Card.Grid>
-        <Card.Grid style={{ width: '50%' }}>Chart</Card.Grid>
+        <div
+          ref={input => {
+            this.myInput = input;
+          }}
+        >
+          <Card.Grid style={{ width: '50%' }}>
+            <LineChart
+              width={this.state.chartWidth - 50}
+              height={300}
+              data={chartData}
+              margin={{ top: 5, right: 30, left: 0, bottom: 5 }}
+            >
+              <XAxis dataKey="name" />
+              <YAxis />
+              <Tooltip />
+              <Line type="monotone" dataKey="gs" stroke="#8884d8" activeDot={{ r: 8 }} />
+            </LineChart>
+          </Card.Grid>
+        </div>
       </div>
     );
   }
