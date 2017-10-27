@@ -1,6 +1,12 @@
 import { combineReducers } from 'redux';
-import example from 'redux/modules/example';
+import editor from 'redux/modules/editor';
+import targets from 'redux/modules/targets';
+import actors from 'redux/modules/actors';
+import events from 'redux/modules/events';
 
 export default combineReducers({
-  example,
+  editor,
+  targets,
+  actors,
+  events,
 });

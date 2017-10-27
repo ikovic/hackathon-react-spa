@@ -1,0 +1,33 @@
+#pipelineEditor .row {
+  margin-bottom: 16px;
+}
+
+#pipelineEditor .controls {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+#pipelineEditor .controls .activeCheckbox {
+  margin-left: 24px;
+}
+
+#pipelineEditor .saveWrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+#pipelineEditor .saveWrapper .progressWrapper {
+  margin-right: 32px;
+}
+
+#pipelineEditor .saveWrapper .progressWrapper .progressLabel {
+  margin-right: 8px;
+}
+
+#pipelineEditor .controls .title {
+  width: 200px;
+}
