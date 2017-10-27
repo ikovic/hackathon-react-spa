@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
-import example from 'redux/modules/example';
+import editor from 'redux/modules/editor';
 
 export default combineReducers({
-  example,
+  editor,
 });

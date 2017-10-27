@@ -1,5 +1,7 @@
 import React, { PureComponent } from 'react';
 import { Card, Row, Col, Progress, Button, Checkbox, Input } from 'antd';
+import { connect } from 'react-redux';
+import { getEditorState } from 'redux/selectors/editor';
 import './styles.css';
 
 const ProgressInfo = ({ percent }) => (
@@ -11,6 +13,8 @@ const ProgressInfo = ({ percent }) => (
 
 class Pipeline extends PureComponent {
   render() {
+    const { percent } = this.props.editor;
+
     return (
       <section id="pipelineEditor">
         <Row gutter={16} className="row">
@@ -26,7 +30,7 @@ class Pipeline extends PureComponent {
             <Checkbox className="activeCheckbox">Active</Checkbox>
           </Col>
           <Col span={12} className="saveWrapper">
-            <ProgressInfo percent={25} />
+            <ProgressInfo percent={percent} />
             <Button type="primary" icon="save" size="large" disabled>
               Save
             </Button>
@@ -51,4 +55,6 @@ class Pipeline extends PureComponent {
   }
 }
 
-export default Pipeline;
+const mapStateToProps = state => ({ editor: getEditorState(state) });
+
+export default connect(mapStateToProps)(Pipeline);

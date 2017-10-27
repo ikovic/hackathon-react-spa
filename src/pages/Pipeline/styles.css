@@ -29,5 +29,5 @@
 }
 
 #pipelineEditor .controls .title {
-  width: 280px;
+  min-width: 240px;
 }
