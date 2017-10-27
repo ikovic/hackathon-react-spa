@@ -26,6 +26,8 @@ const initialState = {
       type: 'player',
     },
   ],
+  loading: false,
+  error: null,
 };
 
 export default function reducer(state = initialState, action) {

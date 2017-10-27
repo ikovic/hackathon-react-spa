@@ -29,13 +29,15 @@ const ProgressInfo = ({ percent }) => (
 class Pipeline extends PureComponent {
   render() {
     const {
-      editor: { percent, values: { name, active, target, actor } },
+      editor: { percent, values: { name, active, target, actor, event } },
       actors,
+      events,
       targets,
       updateName,
       updateStatus,
       selectTarget,
       selectActor,
+      selectEvent,
     } = this.props;
 
     return (
@@ -65,7 +67,9 @@ class Pipeline extends PureComponent {
             </Card>
           </Col>
           <Col span={6}>
-            <Card title="Event">Card content</Card>
+            <Card title="Event" bodyStyle={{ padding: 0 }}>
+              <List items={events.items} onItemClick={selectEvent} selectedItemId={event} />
+            </Card>
           </Col>
           <Col span={6}>
             <Card title="Target" bodyStyle={{ padding: 0 }}>
@@ -85,6 +89,7 @@ const mapStateToProps = state => ({
   editor: getEditorState(state),
   targets: state.targets,
   actors: state.actors,
+  events: state.events,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -92,6 +97,7 @@ const mapDispatchToProps = dispatch => ({
   updateStatus: active => dispatch(EditorActions.updateStatus(active)),
   selectTarget: targetId => dispatch(EditorActions.selectTarget(targetId)),
   selectActor: actorId => dispatch(EditorActions.selectActor(actorId)),
+  selectEvent: eventId => dispatch(EditorActions.selectEvent(eventId)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Pipeline);
