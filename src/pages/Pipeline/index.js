@@ -3,6 +3,7 @@ import { Card, Row, Col, Progress, Button, Checkbox, Input } from 'antd';
 import { connect } from 'react-redux';
 import { getEditorState } from 'redux/selectors/editor';
 import * as EditorActions from 'redux/modules/editor';
+import List from 'pages/Pipeline/List';
 import './styles.css';
 
 const PipelineName = ({ value, onChange }) => (
@@ -27,14 +28,25 @@ const ProgressInfo = ({ percent }) => (
 
 class Pipeline extends PureComponent {
   render() {
-    const { editor: { percent, values: { name } }, updateName } = this.props;
+    const {
+      editor: { percent, values: { name, active } },
+      targets,
+      updateName,
+      updateStatus,
+    } = this.props;
 
     return (
       <section id="pipelineEditor">
         <Row gutter={16} className="row">
           <Col span={12} className="controls">
             <PipelineName value={name} onChange={updateName} />
-            <Checkbox className="activeCheckbox">Active</Checkbox>
+            <Checkbox
+              checked={active}
+              onChange={e => updateStatus(e.target.checked)}
+              className="activeCheckbox"
+            >
+              Active
+            </Checkbox>
           </Col>
           <Col span={12} className="saveWrapper">
             <ProgressInfo percent={percent} />
@@ -45,13 +57,17 @@ class Pipeline extends PureComponent {
         </Row>
         <Row gutter={16} className="row">
           <Col span={6}>
-            <Card title="Actor">Card content</Card>
+            <Card title="Actor" bodyStyle={{ padding: 0 }}>
+              Card content
+            </Card>
           </Col>
           <Col span={6}>
             <Card title="Event">Card content</Card>
           </Col>
           <Col span={6}>
-            <Card title="Target">Card content</Card>
+            <Card title="Target" bodyStyle={{ padding: 0 }}>
+              <List items={targets} />
+            </Card>
           </Col>
           <Col span={6}>
             <Card title="Template">Card content</Card>
@@ -62,10 +78,11 @@ class Pipeline extends PureComponent {
   }
 }
 
-const mapStateToProps = state => ({ editor: getEditorState(state) });
+const mapStateToProps = state => ({ editor: getEditorState(state), targets: state.targets });
 
 const mapDispatchToProps = dispatch => ({
   updateName: name => dispatch(EditorActions.updateName(name)),
+  updateStatus: active => dispatch(EditorActions.updateStatus(active)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Pipeline);
