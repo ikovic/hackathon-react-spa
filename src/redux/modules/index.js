@@ -4,6 +4,7 @@ import targets from 'redux/modules/targets';
 import actors from 'redux/modules/actors';
 import events from 'redux/modules/events';
 import templates from 'redux/modules/templates';
+import pipelines from 'redux/modules/pipelines';
 
 export default combineReducers({
   editor,
@@ -11,4 +12,5 @@ export default combineReducers({
   actors,
   events,
   templates,
+  pipelines,
 });

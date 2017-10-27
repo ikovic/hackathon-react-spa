@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Card, Button, Icon } from 'antd';
 import { LineChart, XAxis, YAxis, Tooltip, Line } from 'recharts';
 
@@ -160,40 +161,13 @@ class PipelineItem extends React.Component {
   }
 }
 
-const items = [
-  {
-    id: 1,
-    title: 'prvi',
-    status: 'active',
-  },
-  {
-    id: 2,
-    title: 'drugi',
-    status: 'paused',
-  },
-  {
-    id: 3,
-    title: 'treci',
-    status: 'deleted',
-  },
-  {
-    id: 4,
-    title: 'cetvrti',
-    status: 'paused',
-  },
-  {
-    id: 5,
-    title: 'peti',
-    status: 'active',
-  },
-];
-
 class Dashboard extends React.Component {
   render() {
+    const { pipelines } = this.props;
     return (
       <div>
         <h1>Dashboard</h1>
-        {items.map(item => (
+        {pipelines.items.map(item => (
           <PipelineItem title={item.title} status={item.status} key={item.id} id={item.id} />
         ))}
       </div>
@@ -201,4 +175,8 @@ class Dashboard extends React.Component {
   }
 }
 
-export default Dashboard;
+const mapStateToProps = state => ({
+  pipelines: state.pipelines,
+});
+
+export default connect(mapStateToProps)(Dashboard);
