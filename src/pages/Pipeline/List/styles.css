@@ -1,6 +1,6 @@
 .pipeList .listItem {
   margin: 0;
-  padding: 8px 8px;
+  padding: 0;
   border-bottom: 1px solid #e9e9e9;
 }
 
@@ -12,11 +12,21 @@
   background: none !important;
   color: inherit;
   border: none;
-  padding: 0 !important;
+  padding: 8px 8px !important;
   font: inherit;
   cursor: pointer;
   outline: inherit !important;
   width: 100%;
   height: 100%;
   text-align: left;
+}
+
+.pipeList .listItem:hover {
+  color: white;
+  background-color: #add8f7;
+}
+
+.pipeList .listItem.selected {
+  color: white;
+  background-color: #49a9ee;
 }
