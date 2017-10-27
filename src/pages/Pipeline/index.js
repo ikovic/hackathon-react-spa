@@ -29,7 +29,12 @@ const ProgressInfo = ({ percent }) => (
 class Pipeline extends PureComponent {
   render() {
     const {
-      editor: { percent, activeElement, values: { name, active, target, actor, event } },
+      editor: {
+        percent,
+        activeElement,
+        disabledElements,
+        values: { name, active, target, actor, event },
+      },
       actors,
       events,
       targets,
@@ -64,28 +69,34 @@ class Pipeline extends PureComponent {
           <Col span={6}>
             <Element
               title="Actor"
+              placeholder="user"
               items={actors.items}
               onItemClick={selectActor}
               selectedItemId={actor}
               active={activeElement === 'actor'}
+              disabled={disabledElements.includes('actor')}
             />
           </Col>
           <Col span={6}>
             <Element
               title="Event"
+              placeholder="trophy"
               items={events.items}
               onItemClick={selectEvent}
               selectedItemId={event}
               active={activeElement === 'event'}
+              disabled={disabledElements.includes('event')}
             />
           </Col>
           <Col span={6}>
             <Element
               title="Target"
+              placeholder="share-alt"
               items={targets}
               onItemClick={selectTarget}
               selectedItemId={target}
               active={activeElement === 'target'}
+              disabled={disabledElements.includes('target')}
             />
           </Col>
           <Col span={6}>
