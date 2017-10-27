@@ -4,7 +4,7 @@ import './styles.css';
 
 const Item = ({ selected, item, onClick }) => (
   <li className={cx('listItem', { selected })}>
-    <button onClick={() => onClick(item.id)}>{item.title}</button>
+    <button onClick={() => onClick(item.id)}>{item.name}</button>
   </li>
 );
 

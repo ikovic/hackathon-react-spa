@@ -11,12 +11,15 @@ const initialState = {
 export const UPDATE_NAME = 'seekandhit/editor/UPDATE_NAME';
 export const UPDATE_STATUS = 'seekandhit/editor/UPDATE_STATUS';
 export const SELECT_TARGET = 'seekandhit/editor/SELECT_TARGET';
+export const SELECT_ACTOR = 'seekandhit/editor/SELECT_ACTOR';
 
 export const updateName = name => ({ type: UPDATE_NAME, name });
 
 export const updateStatus = status => ({ type: UPDATE_STATUS, status });
 
 export const selectTarget = target => ({ type: SELECT_TARGET, target });
+
+export const selectActor = actor => ({ type: SELECT_ACTOR, actor });
 
 export default function reducer(state = initialState, action) {
   switch (action.type) {
@@ -29,6 +32,11 @@ export default function reducer(state = initialState, action) {
       return {
         ...state,
         active: action.status,
+      };
+    case SELECT_ACTOR:
+      return {
+        ...state,
+        actor: action.actor,
       };
     case SELECT_TARGET:
       return {

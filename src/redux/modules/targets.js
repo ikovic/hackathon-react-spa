@@ -1,22 +1,22 @@
 const initialState = [
   {
     id: '123321',
-    title: 'Facebook',
+    name: 'Facebook',
     type: 'facebook',
   },
   {
     id: '312sff',
-    title: 'Twitter',
+    name: 'Twitter',
     type: 'twitter',
   },
   {
     id: 'asd43f4f',
-    title: 'Instagram',
+    name: 'Instagram',
     type: 'instagram',
   },
   {
     id: 'asde44g4',
-    title: 'Pinterest',
+    name: 'Pinterest',
     type: 'pinterest',
   },
 ];
