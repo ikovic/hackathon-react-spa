@@ -13,6 +13,7 @@ export const UPDATE_STATUS = 'seekandhit/editor/UPDATE_STATUS';
 export const SELECT_TARGET = 'seekandhit/editor/SELECT_TARGET';
 export const SELECT_ACTOR = 'seekandhit/editor/SELECT_ACTOR';
 export const SELECT_EVENT = 'seekandhit/editor/SELECT_EVENT';
+export const SELECT_TEMPLATE = 'seekandhit/editor/SELECT_TEMPLATE';
 
 export const updateName = name => ({ type: UPDATE_NAME, name });
 
@@ -23,6 +24,8 @@ export const selectTarget = target => ({ type: SELECT_TARGET, target });
 export const selectActor = actor => ({ type: SELECT_ACTOR, actor });
 
 export const selectEvent = event => ({ type: SELECT_EVENT, event });
+
+export const selectTemplate = template => ({ type: SELECT_TEMPLATE, template });
 
 export default function reducer(state = initialState, action) {
   switch (action.type) {
@@ -50,6 +53,11 @@ export default function reducer(state = initialState, action) {
       return {
         ...state,
         target: action.target,
+      };
+    case SELECT_TEMPLATE:
+      return {
+        ...state,
+        template: action.template,
       };
     default:
       return state;

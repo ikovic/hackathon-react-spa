@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { Row, Col, Card, Progress, Button, Checkbox, Input } from 'antd';
+import { Row, Col, Progress, Button, Checkbox, Input } from 'antd';
 import { connect } from 'react-redux';
 import { getEditorState } from 'redux/selectors/editor';
 import * as EditorActions from 'redux/modules/editor';
@@ -33,16 +33,18 @@ class Pipeline extends PureComponent {
         percent,
         activeElement,
         disabledElements,
-        values: { name, active, target, actor, event },
+        values: { name, active, target, actor, event, template },
       },
       actors,
       events,
       targets,
+      templates,
       updateName,
       updateStatus,
       selectTarget,
       selectActor,
       selectEvent,
+      selectTemplate,
     } = this.props;
 
     return (
@@ -100,7 +102,15 @@ class Pipeline extends PureComponent {
             />
           </Col>
           <Col span={6}>
-            <Card title="Template">Card content</Card>
+            <Element
+              title="Template"
+              placeholder="file"
+              items={templates.items}
+              onItemClick={selectTemplate}
+              selectedItemId={template}
+              active={activeElement === 'template'}
+              disabled={disabledElements.includes('template')}
+            />
           </Col>
         </Row>
       </section>
@@ -113,6 +123,7 @@ const mapStateToProps = state => ({
   targets: state.targets,
   actors: state.actors,
   events: state.events,
+  templates: state.templates,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -121,6 +132,7 @@ const mapDispatchToProps = dispatch => ({
   selectTarget: targetId => dispatch(EditorActions.selectTarget(targetId)),
   selectActor: actorId => dispatch(EditorActions.selectActor(actorId)),
   selectEvent: eventId => dispatch(EditorActions.selectEvent(eventId)),
+  selectTemplate: templateId => dispatch(EditorActions.selectTemplate(templateId)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Pipeline);

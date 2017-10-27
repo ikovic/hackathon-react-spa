@@ -1,6 +1,7 @@
 import React from 'react';
 import { Card, Icon } from 'antd';
 import cx from 'classnames';
+import TemplateModal from 'pages/Pipeline/TemplateModal';
 import './styles.css';
 
 const Item = ({ selected, item, onClick }) => (
@@ -39,6 +40,11 @@ const Element = ({
               selected={selectedItemId === item.id}
             />
           ))}
+          {title === 'Template' ? (
+            <li className="listItem">
+              <TemplateModal />
+            </li>
+          ) : null}
         </ul>
       )}
     </Card>
