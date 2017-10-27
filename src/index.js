@@ -17,7 +17,10 @@ const { Header, Content, Footer } = Layout;
 class App extends React.Component {
   render() {
     return (
-      <Layout className="layout">
+      <Layout
+        className="layout"
+        style={{ display: 'flex', minHeight: '100vh', flexDirection: 'column' }}
+      >
         <Header>
           <div className="logo">
             <a href="https://seekandhit.com">
@@ -42,8 +45,8 @@ class App extends React.Component {
             </Menu.Item>
           </Menu>
         </Header>
-        <Content style={{ padding: '0 50px' }}>
-          <div style={{ background: '#fff', padding: 24, minHeight: 280 }}>
+        <Content style={{ padding: '0 50px', display: 'flex' }}>
+          <div style={{ background: '#fff', padding: 24, minHeight: 280, flex: 1 }}>
             <Switch>
               <Route exact path="/" component={Dashboard} />
               <Route exact path="/pipeline" component={Pipeline} />
