@@ -2,7 +2,21 @@ import React, { PureComponent } from 'react';
 import { Card, Row, Col, Progress, Button, Checkbox, Input } from 'antd';
 import { connect } from 'react-redux';
 import { getEditorState } from 'redux/selectors/editor';
+import * as EditorActions from 'redux/modules/editor';
 import './styles.css';
+
+const PipelineName = ({ value, onChange }) => (
+  <span>
+    <Input
+      addonBefore="Name"
+      placeholder="Pipeline Name"
+      className="title"
+      size="large"
+      value={value}
+      onChange={e => onChange(e.target.value)}
+    />
+  </span>
+);
 
 const ProgressInfo = ({ percent }) => (
   <span className="progressWrapper">
@@ -13,20 +27,13 @@ const ProgressInfo = ({ percent }) => (
 
 class Pipeline extends PureComponent {
   render() {
-    const { percent } = this.props.editor;
+    const { editor: { percent, values: { name } }, updateName } = this.props;
 
     return (
       <section id="pipelineEditor">
         <Row gutter={16} className="row">
           <Col span={12} className="controls">
-            <span>
-              <Input
-                addonBefore="Name"
-                placeholder="Pipeline Name"
-                className="title"
-                size="large"
-              />
-            </span>
+            <PipelineName value={name} onChange={updateName} />
             <Checkbox className="activeCheckbox">Active</Checkbox>
           </Col>
           <Col span={12} className="saveWrapper">
@@ -57,4 +64,8 @@ class Pipeline extends PureComponent {
 
 const mapStateToProps = state => ({ editor: getEditorState(state) });
 
-export default connect(mapStateToProps)(Pipeline);
+const mapDispatchToProps = dispatch => ({
+  updateName: name => dispatch(EditorActions.updateName(name)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Pipeline);

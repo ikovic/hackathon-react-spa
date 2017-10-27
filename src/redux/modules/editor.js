@@ -8,16 +8,16 @@ const initialState = {
   template: null,
 };
 
-export const UPDATE = 'seekandhit/editor/update';
+export const UPDATE_NAME = 'seekandhit/editor/UPDATE_NAME';
 
-export const update = pipeline => ({ type: UPDATE, pipeline });
+export const updateName = name => ({ type: UPDATE_NAME, name });
 
 export default function reducer(state = initialState, action) {
   switch (action.type) {
-    case UPDATE:
+    case UPDATE_NAME:
       return {
         ...state,
-        ...action.pipeline,
+        name: action.name,
       };
     default:
       return state;

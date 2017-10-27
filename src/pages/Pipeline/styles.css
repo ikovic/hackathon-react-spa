@@ -10,7 +10,7 @@
 }
 
 #pipelineEditor .controls .activeCheckbox {
-  margin-left: 32px;
+  margin-left: 24px;
 }
 
 #pipelineEditor .saveWrapper {
@@ -29,5 +29,5 @@
 }
 
 #pipelineEditor .controls .title {
-  min-width: 240px;
+  width: 200px;
 }
