@@ -1,9 +1,9 @@
 import React, { PureComponent } from 'react';
-import { Card, Row, Col, Progress, Button, Checkbox, Input } from 'antd';
+import { Row, Col, Card, Progress, Button, Checkbox, Input } from 'antd';
 import { connect } from 'react-redux';
 import { getEditorState } from 'redux/selectors/editor';
 import * as EditorActions from 'redux/modules/editor';
-import List from 'pages/Pipeline/List';
+import Element from 'pages/Pipeline/Element';
 import './styles.css';
 
 const PipelineName = ({ value, onChange }) => (
@@ -29,7 +29,7 @@ const ProgressInfo = ({ percent }) => (
 class Pipeline extends PureComponent {
   render() {
     const {
-      editor: { percent, values: { name, active, target, actor, event } },
+      editor: { percent, activeElement, values: { name, active, target, actor, event } },
       actors,
       events,
       targets,
@@ -62,19 +62,31 @@ class Pipeline extends PureComponent {
         </Row>
         <Row gutter={16} className="row">
           <Col span={6}>
-            <Card title="Actor" bodyStyle={{ padding: 0 }}>
-              <List items={actors.items} onItemClick={selectActor} selectedItemId={actor} />
-            </Card>
+            <Element
+              title="Actor"
+              items={actors.items}
+              onItemClick={selectActor}
+              selectedItemId={actor}
+              active={activeElement === 'actor'}
+            />
           </Col>
           <Col span={6}>
-            <Card title="Event" bodyStyle={{ padding: 0 }}>
-              <List items={events.items} onItemClick={selectEvent} selectedItemId={event} />
-            </Card>
+            <Element
+              title="Event"
+              items={events.items}
+              onItemClick={selectEvent}
+              selectedItemId={event}
+              active={activeElement === 'event'}
+            />
           </Col>
           <Col span={6}>
-            <Card title="Target" bodyStyle={{ padding: 0 }}>
-              <List items={targets} onItemClick={selectTarget} selectedItemId={target} />
-            </Card>
+            <Element
+              title="Target"
+              items={targets}
+              onItemClick={selectTarget}
+              selectedItemId={target}
+              active={activeElement === 'target'}
+            />
           </Col>
           <Col span={6}>
             <Card title="Template">Card content</Card>

@@ -19,11 +19,19 @@ function getPercentComplete(editor) {
   return percent;
 }
 
+function getActiveElement(editor) {
+  const rules = ['actor', 'event', 'target', 'template'];
+
+  return rules.find(rule => !editor[rule]);
+}
+
 export const getEditorState = createSelector(getEditor, editor => {
   const percent = getPercentComplete(editor);
+  const activeElement = getActiveElement(editor);
 
   return {
     values: editor,
+    activeElement,
     percent,
   };
 });

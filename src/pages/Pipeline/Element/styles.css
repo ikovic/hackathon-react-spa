@@ -1,3 +1,7 @@
+.elementCard.active {
+  border: 1px solid #49a9ee;
+}
+
 .pipeList .listItem {
   margin: 0;
   padding: 0;
