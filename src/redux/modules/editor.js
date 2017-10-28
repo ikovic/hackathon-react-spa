@@ -8,6 +8,7 @@ const initialState = {
   event: null,
   target: null,
   template: null,
+  redirect: false,
   loading: false,
   error: null,
 };
@@ -21,6 +22,7 @@ export const SELECT_TEMPLATE = 'seekandhit/editor/SELECT_TEMPLATE';
 export const SAVE_PIPELINE = 'seekandhit/editor/SAVE_PIPELINE';
 export const SAVE_PIPELINE_SUCCESS = 'seekandhit/editor/SAVE_PIPELINE_SUCCESS';
 export const SAVE_PIPELINE_FAIL = 'seekandhit/editor/SAVE_PIPELINE_FAIL';
+export const CLEAR_EDITOR = 'seekandhit/editor/CLEAR_EDITOR';
 
 export const updateName = name => ({ type: UPDATE_NAME, name });
 
@@ -53,6 +55,10 @@ export const savePipeline = () => (dispatch, getState) => {
     .then(response => dispatch({ type: SAVE_PIPELINE_SUCCESS, pipeline: response.data }))
     .catch(error => dispatch({ type: SAVE_PIPELINE_FAIL, error }));
 };
+
+export const clearEditor = () => ({
+  type: CLEAR_EDITOR,
+});
 
 export default function reducer(state = initialState, action) {
   switch (action.type) {
@@ -93,13 +99,18 @@ export default function reducer(state = initialState, action) {
         error: false,
       };
     case SAVE_PIPELINE_SUCCESS:
-      return initialState;
+      return {
+        ...initialState,
+        redirect: true,
+      };
     case SAVE_PIPELINE_FAIL:
       return {
         ...state,
         error: action.error,
         loading: false,
       };
+    case CLEAR_EDITOR:
+      return initialState;
     default:
       return state;
   }

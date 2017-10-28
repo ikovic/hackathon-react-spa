@@ -40,7 +40,7 @@ class App extends React.Component {
           <Menu
             theme="dark"
             mode="horizontal"
-            defaultSelectedKeys={[this.props.location.pathname]}
+            selectedKeys={[this.props.location.pathname]}
             style={{ lineHeight: '64px' }}
           >
             <Menu.Item key={routes.home}>
