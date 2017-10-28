@@ -29,7 +29,10 @@ const ProgressInfo = ({ percent }) => (
 
 class Pipeline extends PureComponent {
   componentWillMount() {
-    this.props.getActors();
+    const { getActors, clearEditor } = this.props;
+
+    clearEditor();
+    getActors();
   }
   render() {
     const {
@@ -150,6 +153,7 @@ const mapDispatchToProps = dispatch => ({
   selectTemplate: templateId => dispatch(EditorActions.selectTemplate(templateId)),
   savePipeline: () => dispatch(EditorActions.savePipeline()),
   getActors: () => dispatch(getActors()),
+  clearEditor: () => dispatch(EditorActions.clearEditor()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Pipeline);
