@@ -62,7 +62,7 @@ class Pipeline extends PureComponent {
           </Col>
           <Col span={12} className="saveWrapper">
             <ProgressInfo percent={percent} />
-            <Button type="primary" icon="save" size="large" disabled>
+            <Button type="primary" icon="save" size="large" disabled={percent !== 100}>
               Save
             </Button>
           </Col>
