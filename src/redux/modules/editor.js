@@ -8,6 +8,7 @@ const initialState = {
   event: null,
   target: null,
   template: null,
+  redirect: false,
   loading: false,
   error: null,
 };
@@ -98,7 +99,10 @@ export default function reducer(state = initialState, action) {
         error: false,
       };
     case SAVE_PIPELINE_SUCCESS:
-      return initialState;
+      return {
+        ...initialState,
+        redirect: true,
+      };
     case SAVE_PIPELINE_FAIL:
       return {
         ...state,

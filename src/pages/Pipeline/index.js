@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import { Row, Col, Progress, Button, Checkbox, Input } from 'antd';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import { getEditorState } from 'redux/selectors/editor';
 import * as EditorActions from 'redux/modules/editor';
 import Element from 'pages/Pipeline/Element';
@@ -40,7 +41,7 @@ class Pipeline extends PureComponent {
         percent,
         activeElement,
         disabledElements,
-        values: { name, active, target, actor, event, template },
+        values: { name, active, target, actor, event, template, redirect },
       },
       actors,
       events,
@@ -54,6 +55,10 @@ class Pipeline extends PureComponent {
       selectTemplate,
       savePipeline,
     } = this.props;
+
+    if (redirect) {
+      return <Redirect to="/" />;
+    }
 
     return (
       <section id="pipelineEditor">
