@@ -3,6 +3,7 @@ import { Row, Col, Progress, Button, Checkbox, Input } from 'antd';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { getEditorState } from 'redux/selectors/editor';
+import { getFilteredEvents } from 'redux/selectors/events';
 import * as EditorActions from 'redux/modules/editor';
 import Element from 'pages/Pipeline/Element';
 import './styles.css';
@@ -145,7 +146,7 @@ const mapStateToProps = state => ({
   editor: getEditorState(state),
   targets: state.targets,
   actors: state.actors,
-  events: state.events,
+  events: getFilteredEvents(state),
   templates: state.templates,
 });
 
