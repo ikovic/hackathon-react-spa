@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Card, Button, Icon, Timeline } from 'antd';
-import { LineChart, XAxis, YAxis, Tooltip, Line } from 'recharts';
+import { LineChart, XAxis, YAxis, Line } from 'recharts';
 import { getPipelines } from 'redux/modules/pipelines';
 import api from 'utils/api';
 
@@ -64,22 +64,28 @@ class PipelineHeader extends React.Component {
   }
 }
 
-const chartData = [
-  { name: '01/01/16', gs: 1 },
-  { name: '01/08/16', gs: 3 },
-  { name: '01/15/16', gs: 0 },
-  { name: '01/21/16', gs: 4 },
-  { name: '01/28/16', gs: 2 },
-];
-
 class PipelineBody extends React.Component {
   state = {
     chartWidth: null,
     preview: null,
+    chartData: null,
   };
   componentDidMount() {
     this.setState({ chartWidth: this.chartHolder.offsetWidth });
     this.preview(this.props.item.template);
+    this.generateChartData();
+  }
+
+  generateChartData() {
+    this.setState({
+      chartData: [
+        { name: '01/01/16', gs: Math.floor(Math.random() * 6) + 1 },
+        { name: '01/08/16', gs: Math.floor(Math.random() * 6) + 1 },
+        { name: '01/15/16', gs: Math.floor(Math.random() * 6) + 1 },
+        { name: '01/21/16', gs: Math.floor(Math.random() * 6) + 1 },
+        { name: '01/28/16', gs: Math.floor(Math.random() * 6) + 1 },
+      ],
+    });
   }
 
   preview = values => {
@@ -120,12 +126,11 @@ class PipelineBody extends React.Component {
           <LineChart
             width={this.state.chartWidth - 50}
             height={150}
-            data={chartData}
+            data={this.state.chartData}
             margin={{ top: 5, right: 30, left: -30, bottom: 5 }}
           >
             <XAxis dataKey="name" />
             <YAxis />
-            <Tooltip />
             <Line
               type="monotone"
               dataKey="gs"
