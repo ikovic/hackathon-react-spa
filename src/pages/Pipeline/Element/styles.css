@@ -39,6 +39,14 @@
   background-color: #add8f7;
 }
 
+.pipeList .newTemplateBtn {
+  color: #0e77ca;
+}
+
+.pipeList .listItem:hover .newTemplateBtn {
+  color: white;
+}
+
 .pipeList .listItem.selected {
   color: white;
   background-color: #49a9ee;
