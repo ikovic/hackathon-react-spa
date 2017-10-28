@@ -2,6 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Card, Button, Icon, Timeline } from 'antd';
 import { LineChart, XAxis, YAxis, Tooltip, Line } from 'recharts';
+import { getPipelines } from 'redux/modules/pipelines';
+import api from 'utils/api';
 
 const STATUS = {
   ACTIVE: 'active',
@@ -19,7 +21,7 @@ class PipelineHeader extends React.Component {
   };
 
   render() {
-    const { status, title, id } = this.props;
+    const { status, title, id, showMoreText } = this.props;
     let icon = <Icon type="play-circle-o" />;
     let activationButtonText = 'Pause';
     if (status === STATUS.PAUSED) {
@@ -54,7 +56,7 @@ class PipelineHeader extends React.Component {
             </Button>
           </Button.Group>
           <Button type="normal" onClick={this.props.onShowMore}>
-            Show more
+            {showMoreText}
           </Button>
         </span>
       </div>
@@ -73,10 +75,19 @@ const chartData = [
 class PipelineBody extends React.Component {
   state = {
     chartWidth: null,
+    preview: null,
   };
   componentDidMount() {
     this.setState({ chartWidth: this.chartHolder.offsetWidth });
+    this.preview(this.props.item.template);
   }
+
+  preview = values => {
+    delete values.id;
+    api
+      .post('/templates/preview', values)
+      .then(({ data }) => this.setState({ preview: { __html: data.html } }));
+  };
 
   render() {
     const { item } = this.props;
@@ -91,14 +102,7 @@ class PipelineBody extends React.Component {
           <div>
             <h2 style={{ marginBottom: 15 }}>Preview:</h2>
           </div>
-          <iframe
-            frameBorder="0"
-            src="https://www.facebook.com/ads/api/preview_iframe.php?d=AQJND3jDjXZLSAZ0KrT1Z1mwnOlipP51WSclhNLRNS44rCtKfbsaClO5cTSdcvQwlBwgZKLZ-lYJIKFwixl_XoDZ0DuQZe4WI3A_K3HD-QxshGFeT5hpAs7KqQ-OX3CbEwXl3KxTbZRE76LEJ8pvfryX93KyYApXgzIsCF3ZStLb0124g2nlWXyZMp0SEG-yng5_IiXGXmuiTj2aoGg9ngmNlgx6SQUyfuct6FK1RjEDQFJaD4nw6bTA795-R6IzWjEjW8LwFCtKn1h_RWRjWwBIPJi_hxj6iVVn2AM7iR65Sd5f-5yYvHYJlNThtTFzPYEMSf5Nydrb_tQ2Swr-vdsLF9PpKr8HLmJmTlKvOv0alROjHZL0A2zoQFwQ7DbPxrJa0vlxt3O1HJXXnk3Kd-PG7_7g7Nw1a2h-2O16W1WNhvB5C7sY4l33iYaNIBJL5i28Pam72JDsT8MuvoVk7xCyE-xJe0Ze1G7jTW7NbhnkkHemOs4Rc5GSGoWI_vRwwUmdpV472dWwdoI7_fDV6GeAd7JgCluo9f3fZmtT55l9I9FwPa3chrLy47aIuLzukIy3Hvo8w26B0v4rTY5dcOVjBHP3fmGrR9-1FxFXO2xRxZ5ArmO7dBwGcslkKi_ZVsflTGQrBfrfwUIDq_yNpFbkQ4pJXwIzWSqS1JsNcq4iOsvCJFtmzIe38kjPgJo0TQzulYpazC3ygJCIg1j9O8zHWgAhClDta4Hp4DdhjcFpSt-sLzc-l1qJyOHtLBvK65_if4msINaJWjdvTeG11kdVsk1rj6uONomlajJ8d3sxdMtU4edgHkGf7u7sCNAT4X4&amp;t=AQKzmnQRXnkAKVR5"
-            width="505"
-            height="435"
-            scrolling="no"
-            style={{ border: 'none' }}
-          />
+          <div dangerouslySetInnerHTML={this.state.preview} />
         </div>
         <div
           ref={input => {
@@ -135,9 +139,9 @@ class PipelineBody extends React.Component {
           </div>
           <div style={{ marginTop: 10, paddingLeft: 10 }}>
             <Timeline>
-              <Timeline.Item>{item.actor}</Timeline.Item>
-              <Timeline.Item>{item.event}</Timeline.Item>
-              <Timeline.Item>Publishing Ad on {item.target}</Timeline.Item>
+              <Timeline.Item>{item.actor.name}</Timeline.Item>
+              <Timeline.Item>{item.event.name}</Timeline.Item>
+              <Timeline.Item>Publishing Ad on {item.target.name}</Timeline.Item>
             </Timeline>
           </div>
         </div>
@@ -149,6 +153,7 @@ class PipelineBody extends React.Component {
 class PipelineItem extends React.Component {
   state = {
     more: false,
+    showMoreText: 'Show More',
   };
 
   changeStatus = (status, id) => {
@@ -156,18 +161,23 @@ class PipelineItem extends React.Component {
   };
 
   toggleMore = () => {
-    this.setState({ more: !this.state.more });
+    const showMoreText = this.state.more ? 'Show More' : 'Show Less';
+    this.setState({
+      more: !this.state.more,
+      showMoreText: showMoreText,
+    });
   };
 
   render() {
-    const { more } = this.state;
+    const { more, showMoreText } = this.state;
     const { item } = this.props;
     return (
       <Card>
         <PipelineHeader
-          title={item.title}
+          title={item.name}
           status={item.status}
           id={item.id}
+          showMoreText={showMoreText}
           onShowMore={this.toggleMore}
           changeStatus={this.changeStatus}
         />
@@ -178,6 +188,10 @@ class PipelineItem extends React.Component {
 }
 
 class Dashboard extends React.Component {
+  componentWillMount() {
+    this.props.getPipelines();
+  }
+
   render() {
     const { pipelines } = this.props;
     return <div>{pipelines.items.map(item => <PipelineItem item={item} key={item.id} />)}</div>;
@@ -188,4 +202,8 @@ const mapStateToProps = state => ({
   pipelines: state.pipelines,
 });
 
-export default connect(mapStateToProps)(Dashboard);
+const mapDispatchToProps = dispatch => ({
+  getPipelines: () => dispatch(getPipelines()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
