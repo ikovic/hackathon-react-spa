@@ -1,38 +1,55 @@
+import apiClient from 'utils/api';
+import { EVENTS_SUCCESS, EVENTS_FAIL } from './events';
+
+export const ACTORS = 'seekandhit/actors/ACTORS';
+export const ACTORS_SUCCESS = 'seekandhit/actors/ACTORS_SUCCESS';
+export const ACTORS_FAIL = 'seekandhit/actors/ACTORS_FAIL';
+
 const initialState = {
-  items: [
-    {
-      id: '123ssrgdsrgs',
-      name: 'Rafael Nadal',
-      type: 'player',
-    },
-    {
-      id: 'asdalkj9i90',
-      name: 'Roger Federer',
-      type: 'player',
-    },
-    {
-      id: 'Barsdkjah0',
-      name: 'Barcelona',
-      type: 'club',
-    },
-    {
-      id: 'efbeo94084',
-      name: 'Omiski Gusar',
-      type: 'club',
-    },
-    {
-      id: '666satanas',
-      name: 'Zoltan Dosa',
-      type: 'player',
-    },
-  ],
+  items: [],
   loading: false,
   error: null,
 };
 
 export default function reducer(state = initialState, action) {
   switch (action.type) {
+    case ACTORS:
+      return {
+        ...state,
+        loading: true,
+        error: null,
+      };
+    case ACTORS_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        items: action.actors,
+        error: null,
+      };
+    case ACTORS_FAIL:
+      return {
+        ...state,
+        loading: false,
+        items: null,
+        error: action.error,
+      };
     default:
       return state;
   }
 }
+
+export const getActors = () => dispatch => {
+  dispatch({ type: ACTORS });
+  apiClient
+    .get('/actors/')
+    .then(response => {
+      const actors = response.data.actors;
+      const events = response.data.events;
+      dispatch({ type: ACTORS_SUCCESS, actors });
+      dispatch({ type: EVENTS_SUCCESS, events });
+    })
+    .catch(error => {
+      dispatch({ type: ACTORS_FAIL, error });
+      dispatch({ type: EVENTS_FAIL, error });
+    });
+};

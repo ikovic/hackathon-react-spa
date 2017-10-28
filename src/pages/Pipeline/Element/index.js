@@ -28,7 +28,7 @@ const Element = ({
 }) => (
   <div className={cx('elementCard', { active })}>
     <Card title={title} loading={loading} bodyStyle={{ padding: 0 }}>
-      {disabled ? (
+      {disabled || loading ? (
         <Placeholder icon={placeholder} />
       ) : (
         <ul className="pipeList">

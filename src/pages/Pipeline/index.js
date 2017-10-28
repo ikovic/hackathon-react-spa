@@ -5,6 +5,7 @@ import { getEditorState } from 'redux/selectors/editor';
 import * as EditorActions from 'redux/modules/editor';
 import Element from 'pages/Pipeline/Element';
 import './styles.css';
+import { getActors } from 'redux/modules/actors';
 
 const PipelineName = ({ value, onChange }) => (
   <span>
@@ -27,6 +28,9 @@ const ProgressInfo = ({ percent }) => (
 );
 
 class Pipeline extends PureComponent {
+  componentWillMount() {
+    this.props.getActors();
+  }
   render() {
     const {
       editor: {
@@ -77,6 +81,7 @@ class Pipeline extends PureComponent {
         <Row gutter={16} className="row">
           <Col span={6}>
             <Element
+              loading={actors.loading}
               title="Actor"
               placeholder="user"
               items={actors.items}
@@ -88,6 +93,7 @@ class Pipeline extends PureComponent {
           </Col>
           <Col span={6}>
             <Element
+              loading={events.loading}
               title="Event"
               placeholder="trophy"
               items={events.items}
@@ -99,6 +105,7 @@ class Pipeline extends PureComponent {
           </Col>
           <Col span={6}>
             <Element
+              loading={targets.loading}
               title="Target"
               placeholder="share-alt"
               items={targets}
@@ -110,6 +117,7 @@ class Pipeline extends PureComponent {
           </Col>
           <Col span={6}>
             <Element
+              loading={templates.loading}
               title="Template"
               placeholder="file"
               items={templates.items}
@@ -141,6 +149,7 @@ const mapDispatchToProps = dispatch => ({
   selectEvent: eventId => dispatch(EditorActions.selectEvent(eventId)),
   selectTemplate: templateId => dispatch(EditorActions.selectTemplate(templateId)),
   savePipeline: () => dispatch(EditorActions.savePipeline()),
+  getActors: () => dispatch(getActors()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Pipeline);
