@@ -45,6 +45,7 @@ class Pipeline extends PureComponent {
       selectActor,
       selectEvent,
       selectTemplate,
+      savePipeline,
     } = this.props;
 
     return (
@@ -62,7 +63,13 @@ class Pipeline extends PureComponent {
           </Col>
           <Col span={12} className="saveWrapper">
             <ProgressInfo percent={percent} />
-            <Button type="primary" icon="save" size="large" disabled>
+            <Button
+              type="primary"
+              icon="save"
+              size="large"
+              onClick={savePipeline}
+              disabled={percent !== 100}
+            >
               Save
             </Button>
           </Col>
@@ -133,6 +140,7 @@ const mapDispatchToProps = dispatch => ({
   selectActor: actorId => dispatch(EditorActions.selectActor(actorId)),
   selectEvent: eventId => dispatch(EditorActions.selectEvent(eventId)),
   selectTemplate: templateId => dispatch(EditorActions.selectTemplate(templateId)),
+  savePipeline: () => dispatch(EditorActions.savePipeline()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Pipeline);
