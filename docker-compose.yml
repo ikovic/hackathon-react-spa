@@ -1,0 +1,6 @@
+hackathon-fe:
+  build: .
+  ports:
+    - "8090:8090"
+  environment:
+    - NODE_PATH=src/
