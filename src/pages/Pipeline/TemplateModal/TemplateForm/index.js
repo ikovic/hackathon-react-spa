@@ -7,7 +7,7 @@ const TemplateForm = ({ form: { getFieldDecorator }, onSubmit, actor }) => (
   <Form onSubmit={onSubmit}>
     <FormItem label="Name">
       {getFieldDecorator('name', {
-        initialValue: Mention.toContentState('Heineken | #ChampionTheMatch with {actor}'),
+        initialValue: Mention.toContentState('Heineken | #ChampionTheMatch with'),
       })(<Mention style={{ width: '100%', height: 40 }} suggestions={[actor.name]} multiLines />)}
     </FormItem>
     <FormItem label="Link">
@@ -22,14 +22,14 @@ const TemplateForm = ({ form: { getFieldDecorator }, onSubmit, actor }) => (
     <FormItem label="Description">
       {getFieldDecorator('description', {
         initialValue: Mention.toContentState(
-          'Heineken® launches new UEFA Champions League campaign, starring {actor}',
+          'Heineken® launches new UEFA Champions League campaign, starring Zlatan Ibrahimovic',
         ),
       })(<Mention style={{ width: '100%', height: 40 }} suggestions={[actor.name]} multiLines />)}
     </FormItem>
     <FormItem label="Message">
       {getFieldDecorator('message', {
         initialValue: Mention.toContentState(
-          '{minutes} minutes into the game, {actor} scores! {club} leads {score}. #ChampionTheMatch and share this post to celebrate with us!',
+          '{minutes} minutes into the game, Zlatan Ibrahimovic scores! {club} leads {score}. #ChampionTheMatch and share this post to celebrate with us!',
         ),
       })(<Mention style={{ width: '100%', height: 100 }} suggestions={[actor.name]} multiLines />)}
     </FormItem>
