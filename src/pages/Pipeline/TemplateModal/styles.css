@@ -1,3 +1,7 @@
 .ant-row.ant-form-item {
   margin-bottom: 8px;
 }
+
+.iframeWrapper {
+  display: flex;
+}

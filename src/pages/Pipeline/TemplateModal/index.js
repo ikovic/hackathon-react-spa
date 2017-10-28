@@ -84,11 +84,14 @@ class TemplateModal extends PureComponent {
         description: Mention.toString(values.description).replace('@', ''),
       };
 
-      api.post('/templates/preview', template).then(markup => console.log(markup));
+      api
+        .post('/templates/preview', template)
+        .then(({ data }) => this.setState({ preview: { __html: data.html } }));
     });
   }, 750);
 
   render() {
+    const { visible, preview } = this.state;
     const actor = this.props.actor;
 
     return (
@@ -97,13 +100,14 @@ class TemplateModal extends PureComponent {
           <span className="newTemplateBtn">New...</span>
         </Button>
         <Modal
+          width={880}
           title="New Template"
-          visible={this.state.visible}
+          visible={visible}
           onOk={this.handleOk}
           onCancel={this.handleCancel}
         >
-          <Row>
-            <Col span={12}>
+          <Row gutter={16}>
+            <Col span={9}>
               <TemplateForm
                 onSubmit={this.handleOk}
                 preview={this.preview}
@@ -111,7 +115,9 @@ class TemplateModal extends PureComponent {
                 ref={form => (this.form = form)}
               />
             </Col>
-            <Col span={12}>PREVIEW</Col>
+            <Col span={15}>
+              {preview ? <div className="iframeWrapper" dangerouslySetInnerHTML={preview} /> : null}
+            </Col>
           </Row>
         </Modal>
       </div>
