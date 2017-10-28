@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Card, Button, Icon } from 'antd';
+import { Card, Button, Icon, Timeline } from 'antd';
 import { LineChart, XAxis, YAxis, Tooltip, Line } from 'recharts';
 
 const STATUS = {
@@ -79,6 +79,7 @@ class PipelineBody extends React.Component {
   }
 
   render() {
+    const { item } = this.props;
     return (
       <div style={{ marginTop: '10px', display: 'flex' }}>
         <div
@@ -88,7 +89,7 @@ class PipelineBody extends React.Component {
           }}
         >
           <div>
-            <h3>Preview:</h3>
+            <h2 style={{ marginBottom: 15 }}>Preview:</h2>
           </div>
           <iframe
             frameBorder="0"
@@ -110,7 +111,7 @@ class PipelineBody extends React.Component {
           }}
         >
           <div>
-            <h3>Number of triggered events:</h3>
+            <h2 style={{ marginBottom: 15 }}>Number of triggered events:</h2>
           </div>
           <LineChart
             width={this.state.chartWidth - 50}
@@ -129,6 +130,16 @@ class PipelineBody extends React.Component {
               activeDot={{ r: 8 }}
             />
           </LineChart>
+          <div style={{ marginTop: 30 }}>
+            <h2 style={{ marginBottom: 15 }}>Pipeline Flow:</h2>
+          </div>
+          <div style={{ marginTop: 10, paddingLeft: 10 }}>
+            <Timeline>
+              <Timeline.Item>{item.actor}</Timeline.Item>
+              <Timeline.Item>{item.event}</Timeline.Item>
+              <Timeline.Item>Publishing Ad on {item.target}</Timeline.Item>
+            </Timeline>
+          </div>
         </div>
       </div>
     );
@@ -150,16 +161,17 @@ class PipelineItem extends React.Component {
 
   render() {
     const { more } = this.state;
+    const { item } = this.props;
     return (
       <Card>
         <PipelineHeader
-          title={this.props.title}
-          status={this.props.status}
-          id={this.props.id}
+          title={item.title}
+          status={item.status}
+          id={item.id}
           onShowMore={this.toggleMore}
           changeStatus={this.changeStatus}
         />
-        {more && <PipelineBody />}
+        {more && <PipelineBody item={item} />}
       </Card>
     );
   }
@@ -168,14 +180,7 @@ class PipelineItem extends React.Component {
 class Dashboard extends React.Component {
   render() {
     const { pipelines } = this.props;
-    return (
-      <div>
-        <h1>Dashboard</h1>
-        {pipelines.items.map(item => (
-          <PipelineItem title={item.title} status={item.status} key={item.id} id={item.id} />
-        ))}
-      </div>
-    );
+    return <div>{pipelines.items.map(item => <PipelineItem item={item} key={item.id} />)}</div>;
   }
 }
 
