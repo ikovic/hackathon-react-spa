@@ -11,9 +11,14 @@ import './styles.css';
 class TemplateModal extends PureComponent {
   state = { visible: false, preview: null };
 
+  replacePlaceholders = mention => Mention.toString(mention).replace('@', '');
+
   getTemplateData = rawData => ({
     ...rawData,
-    message: Mention.toString(rawData.message).replace('@', ''),
+    name: this.replacePlaceholders(rawData.name),
+    message: this.replacePlaceholders(rawData.message),
+    description: this.replacePlaceholders(rawData.description),
+    caption: rawData.link,
   });
 
   showModal = () => {
