@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { withRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { LocaleProvider, Layout, Menu } from 'antd';
 import enUS from 'antd/lib/locale-provider/en_US';
@@ -13,6 +14,11 @@ import 'antd/dist/antd.css';
 import './styles.css';
 
 const { Header, Content, Footer } = Layout;
+
+const routes = {
+  home: '/',
+  editor: '/pipeline',
+};
 
 class App extends React.Component {
   render() {
@@ -34,14 +40,14 @@ class App extends React.Component {
           <Menu
             theme="dark"
             mode="horizontal"
-            defaultSelectedKeys={['1']}
+            defaultSelectedKeys={[this.props.location.pathname]}
             style={{ lineHeight: '64px' }}
           >
-            <Menu.Item key="1">
-              <Link to="/">Home</Link>
+            <Menu.Item key={routes.home}>
+              <Link to={routes.home}>Home</Link>
             </Menu.Item>
-            <Menu.Item key="2">
-              <Link to="/pipeline">Pipeline</Link>
+            <Menu.Item key={routes.editor}>
+              <Link to={routes.editor}>Pipeline</Link>
             </Menu.Item>
           </Menu>
         </Header>
@@ -59,11 +65,13 @@ class App extends React.Component {
   }
 }
 
+const AppWithRouter = withRouter(App);
+
 ReactDOM.render(
   <BrowserRouter>
     <LocaleProvider locale={enUS}>
       <Provider store={store}>
-        <App />
+        <AppWithRouter />
       </Provider>
     </LocaleProvider>
   </BrowserRouter>,
