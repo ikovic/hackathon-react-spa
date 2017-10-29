@@ -44,10 +44,10 @@ class App extends React.Component {
             style={{ lineHeight: '64px' }}
           >
             <Menu.Item key={routes.home}>
-              <Link to={routes.home}>Home</Link>
+              <Link to={routes.home}>Dashboard</Link>
             </Menu.Item>
             <Menu.Item key={routes.editor}>
-              <Link to={routes.editor}>Pipeline</Link>
+              <Link to={routes.editor}>Create</Link>
             </Menu.Item>
           </Menu>
         </Header>

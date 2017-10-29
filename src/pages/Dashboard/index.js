@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Card, Button, Icon, Timeline } from 'antd';
 import { LineChart, XAxis, YAxis, Line } from 'recharts';
-import { getPipelines } from 'redux/modules/pipelines';
+import { getPipelines, changeStatus } from 'redux/modules/pipelines';
 import api from 'utils/api';
 
 const STATUS = {
@@ -162,7 +162,7 @@ class PipelineItem extends React.Component {
   };
 
   changeStatus = (status, id) => {
-    console.log('call api with this shit', status, id);
+    this.props.changeStatus(id, status);
   };
 
   toggleMore = () => {
@@ -198,8 +198,14 @@ class Dashboard extends React.Component {
   }
 
   render() {
-    const { pipelines } = this.props;
-    return <div>{pipelines.items.map(item => <PipelineItem item={item} key={item.id} />)}</div>;
+    const { pipelines, changeStatus } = this.props;
+    return (
+      <div>
+        {pipelines.items.map(item => (
+          <PipelineItem item={item} key={item.id} changeStatus={changeStatus} />
+        ))}
+      </div>
+    );
   }
 }
 
@@ -209,6 +215,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   getPipelines: () => dispatch(getPipelines()),
+  changeStatus: (id, status) => dispatch(changeStatus(id, status)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
