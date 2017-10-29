@@ -3,8 +3,14 @@ const initialState = {
     {
       id: '12315fsefsd',
       link: 'www.link.com',
-      name: 'Facebook',
-      message: 'Fuk fuk fuk',
+      name: 'Post',
+      message: 'Just a post',
+    },
+    {
+      id: 'oasd009sgd',
+      link: 'www.link2.com',
+      name: 'Ad',
+      message: 'Just an ad',
     },
   ],
   loading: false,
