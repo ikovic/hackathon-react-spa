@@ -91,7 +91,7 @@ class Pipeline extends PureComponent {
           <Col span={6}>
             <Element
               loading={actors.loading}
-              title="Actor"
+              title="Team or Player"
               placeholder="user"
               items={actors.items}
               onItemClick={selectActor}
@@ -115,7 +115,7 @@ class Pipeline extends PureComponent {
           <Col span={6}>
             <Element
               loading={targets.loading}
-              title="Target"
+              title="Platform"
               placeholder="share-alt"
               items={targets}
               onItemClick={selectTarget}
