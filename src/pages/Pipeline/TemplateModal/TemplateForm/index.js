@@ -24,7 +24,7 @@ const TemplateForm = ({ form: { getFieldDecorator }, onSubmit, actor }) => (
         initialValue: Mention.toContentState(
           'Heineken® launches new UEFA Champions League campaign, starring Zlatan Ibrahimovic',
         ),
-      })(<Mention style={{ width: '100%', height: 40 }} suggestions={[actor.name]} multiLines />)}
+      })(<Mention style={{ width: '100%', height: 50 }} suggestions={[actor.name]} multiLines />)}
     </FormItem>
     <FormItem label="Message">
       {getFieldDecorator('message', {

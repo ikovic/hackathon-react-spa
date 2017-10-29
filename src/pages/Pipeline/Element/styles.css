@@ -1,3 +1,11 @@
+.elementCard .ant-card-head {
+  background-color: #0e77ca;
+}
+
+.elementCard .ant-card-head-title {
+  color: white;
+}
+
 .elementCard .placeholder {
   height: 128px;
   display: flex;
@@ -9,6 +17,10 @@
 .elementCard.active {
   border: 1px solid #49a9ee;
   border-radius: 2px;
+}
+
+.elementCard.active > div.ant-card-bordered {
+  border: none;
 }
 
 .pipeList .listItem {
@@ -49,5 +61,5 @@
 
 .pipeList .listItem.selected {
   color: white;
-  background-color: #49a9ee;
+  background-color: #49a9ee ;
 }

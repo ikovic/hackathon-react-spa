@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const config = {
-  BACKEND_API_URL: 'http://innohack-team04.spark.ba:5000',
+  BACKEND_API_URL: 'http://139.162.172.245:5000',
   API_CLIENT_TIMEOUT: 16000,
 };
 
